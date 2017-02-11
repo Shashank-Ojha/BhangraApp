@@ -1,6 +1,6 @@
 import math
 from pickle import load
-hashtable=load(open("PunjabTesting2.pkl","rb"))
+hashtable=load(open("TegPickleDump.pkl","rb"))
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
     (x2, y2, z2, t2) = p2
@@ -222,15 +222,17 @@ def newDot(v1,v2):
     # (x2,y2) = (v1[0],v1[1])
     # length1 = (x1**2 + y1**2)**0.5
     # length2 = (x2**2 + y2**2)**0.5
-    v1n = (v1[1], v1[2], 0)
-    v1n = (v1[1], v1[2], 0)
-    return dot(v1,v2)
+    v1n = (v1[0], v1[1], 0)
+    v2n = (v2[0], v2[1], 0)
+    return (v1n[0]*v2n[0] + v1n[1]*v2n[1])
 
 
 def newAngle(v1,v2):
-    newDotp = newDot(v1, v2)
-    m1 = magnitude(v1)
-    m2 = magnitude(v2)
+    v1n = (v1[0], v1[1], 0)
+    v2n = (v2[0], v2[1], 0)
+    newDotp = newDot(v1n, v2n)
+    m1 = magnitude(v1n)
+    m2 = magnitude(v2n)
     return math.acos(newDotp/(m1*m2)) #rad
 
 
@@ -271,16 +273,19 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         (v1,v2) = getVectors(bigtuple[4], rightShoulderHeightP1, bigtuple[4], rightElbowP4)
         rightAngle = newAngle(v1,v2) # in radians
         #left elbow hangle
-        leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
-        leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
-        # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
-        (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
-        leftAngle = angle(v1,v2) # in radians
+        # leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
+        # leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
+        # # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
+        # (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
+        # leftAngle = angle(v1,v2) # in radians
 
         #print(180-math.degrees(rightAngle))
         #print(180-math.degrees(leftAngle))
         print(rightShoulderHeightP1)
-        print(rightShoulder)
+        print(bigtuple[4])
+        print(bigtuple[4])
+        print(rightElbowP4)
+        print(v1,v2)
         print(math.degrees(rightAngle))
 
 
@@ -290,7 +295,7 @@ print("it worked")
 
 
     # rightHandList=hashtable[21]
-    # leftHandList=hashtable[11]
+    # leftHandList=hashtabble[11]
     # rightElbowList=hashtable[22]
     # leftElbowList=hashtable[12]
     # rightShoulderList=hashtable[23]
