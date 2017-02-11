@@ -1,4 +1,5 @@
 import math
+import random
 from pickle import load
 
 hashtable=load(open("PunjabTesting2.pkl","rb"))

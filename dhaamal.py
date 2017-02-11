@@ -1,5 +1,7 @@
 import math
+import random
 from pickle import load
+
 hashtable=load(open("TegBadDump.pkl","rb"))
 
 def distance(p1, p2):
@@ -270,7 +272,7 @@ def giveArmFeedback(score):
     if score<0.75:
         feedbackF = ["Try to keep your arms more in line with each other.",
                     "Get your arms to have equal extension!"]
-        feedback_num = random.randint(0, len(feedbackB)-1)
+        feedback_num = random.randint(0, len(feedbackF)-1)
         feedback = feedbackF[feedback_num]
     elif score<0.92:
         feedbackA = ["Getting close, flail with your arms a little less!", 
@@ -338,7 +340,7 @@ def giveKneeHeightFeedback(percentageKneeHeight):
 def feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, score):
     kneeAngleFeedback=giveKneeAngleFeedback(percentageKneeAngle)
     armFeedback=giveArmFeedback(percentageDhammalArms)
-    kneeHeightFeedback=kneeAboveHip(percentageKneeHeight)
+    kneeHeightFeedback=giveKneeHeightFeedback(percentageKneeHeight)
     shouldersFeedback="Don't forget to always get that shoulder bounce!"
     proTipFeedback="Pro Tip: On double dhammal, try to get a dip on every odd beat!"
     finalScore=str(score)
@@ -349,17 +351,16 @@ def gradeDhammal(dhammalList):
     percentageDhammalArms=dhammalArms(dhammalList)  #weight 1
     percentageKneeHeight=kneeAboveHip(dhammalList) #weight 2
     
-    feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight)
-
     #give weights
     total=round((2*percentageKneeAngle+percentageDhammalArms+2*percentageKneeHeight)*2, 1) #will give a number like 9.8
     final=feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, total)
     return final
-    
+
 def main():
     dhammalList=dhammal(hashtable)
     final=gradeDhammal(dhammalList)
     return final
+
 # print(purpl)
 # print("length of dhammal=", len(purpl))
 # print(gradeDhammal(purpl))
