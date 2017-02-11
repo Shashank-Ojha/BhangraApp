@@ -1,6 +1,8 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template
+import os.path
 import dikkysbrain
+import dhaamal
 
 # create the application object
 app = Flask(__name__)
@@ -36,15 +38,28 @@ def faslaan():
 
 @app.route('/punjabFeedback')
 def punjabFeedback():
+    # save_path = "/templates"
+    # completeName = "output.txt"#os.path.join(save_path, "output.txt")
     s = dikkysbrain.main()
-    text_file = open("output.txt", "w")
-    text_file.write(s)
-    text_file.close()
-    return render_template('punjabFeedback.html')  # render a template
+    # text_file = open(completeName, "w")
+    # text_file.write(s)
+    # text_file.close()
+    print(s)
+    return(s)
+    #return render_template('punjabFeedback.html', s=s)
+    #return render_template('punjabFeedback.html')  # render a template
 
 @app.route('/dhamaalFeedback')
 def dhamaalFeedback():
-    return render_template('dhamaalFeedback.html')  # render a template
+    # save_path = "/templates"
+    # completeName = "output.txt"#os.path.join(save_path, "output.txt")
+    s = dhaamal.main()
+    # text_file = open(completeName, "w")
+    # text_file.write(s)
+    # text_file.close()
+    print(s)
+    return(s)  # render a template
+    #return render_template('dhamaalFeedback.html', s=s)
 
 @app.route('/faslaanFeedback')
 def faslaanFeedback():

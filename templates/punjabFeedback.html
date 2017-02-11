@@ -31,11 +31,26 @@
   function changePage() {
     window.location = "punjabFeedback"
   }
-  function read() {
-    xmlHttp.open("GET","output.txt",true);
+  function readTextFile(file)
+  {
+    alert("hello")
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
   }
   </script>
-  <body>
+  <body onload="readTextFile("output.txt")">
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse" >
@@ -59,7 +74,7 @@
     <div class="text-center">
       <h1 style="color:cadetblue">PUNJAB<h1>
 
-      <h3>Song Suggestions</h3>
+      <h3 >Song Suggestions</h3>
     </div>
     <section class="no-padding" id="portfolio">
         <div class="container-fluid">
