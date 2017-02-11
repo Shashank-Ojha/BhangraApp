@@ -273,22 +273,42 @@ def kneeAboveHip(dhammalList):
     return score/len(maxPos)
     
 
+def giveKneeAngleFeedback(percentageKneeAngle):
+    if percentageKneeAngle<.75:
+        feebackF=["Try to drive up with your knee more!", 
+        "Try to keep your feet directly below your knee at the max point of dhaamal!",
+         "Keep trying for the 90 degree angle between your knee and your foot!"]
+        feedback=feebackF[random.randint(0,2)]
+    if percentageKneeAngle<.92:
+        feedbackA = ["Your knee is almost there! Keep trying for 90 degrees!", "Good job! Continue driving up with your knees!"]
+        feedback=feedbackA[random.randint(0,1)]
+    else: 
+        feedback="Great work! Your dhammal knee angle looks great! Keep it up!"
+    return feedback
+def giveKneeHeightFeedback(percentageKneeHeight):
+    if percentageKneeHeight<.75:
+        feedbackF=["Try to get your knee above your hips--it might help to lean backwards a bit!", "Drive with your knee to get it above your hip!"]
+        feedback=feedbackF[random.randint(0,1)]
+    if percentageKneeHeight<.92:
+        feedbackA=[ "Your knee height is almost there! Try to keep it consistently above your hip.", "Keep driving with your knee to keep it above your hip!"]
+        feedback=feedbackA[random.randint(0,1)]
+    else: 
+        feedback="Your dhaamal knee height is good! Keep up the good form!"
 
+def feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight):
+    kneeAngleFeedback=giveKneeAngleFeedback(percentageKneeAngle)
+    armFeedback=giveArmFeedback(percentageDhammalArms)
+    kneeHeightFeedback=giveKneeHeightFeedback(percentageKneeHeight)
+    shouldersFeedback="Don't forget to always get that shoulder bounce!"
+    proTipFeedback="Pro Tip: On double dhammal, try to get a dip on every odd beat!"
+    return (kneeAngleFeedback + "\n" + armFeedback + "\n" +kneeHeightFeedback+"\n"+ shouldersFeedback+"\n"+proTipFeedback)
 def gradeDhammal(dhammalList): 
     #reutnrs a percentage like .95
     percentageKneeAngle=dhammalKneeAngle(dhammalList) #weight 2
     percentageDhammalArms=dhammalArms(dhammalList)  #weight 1
     percentageKneeHeight=kneeAboveHip(dhammalList) #weight 2
-    kneeAngleFeedback=""
-    armFeedback=""
-
-    if percentageKneeAngle<.92:
-        kneeAngleFeedback=giveKneeAngleFeedback(percentageKneeAngle)
-    if percentageDhammalArms<.92:
-        armFeedback=giveArmFeedback(percentageDhammalArms)
-    if percentageKneeHeight<.92:
-        kneeHeightFeedback=giveKneeHeightFeedback(percentageKneeHeight)
-
+    
+    feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight)
 
     #give weights
     total=round((2*percentageKneeAngle+percentageDhammalArms+2*percentageKneeHeight)*2, 1) #will give a number like 9.8
