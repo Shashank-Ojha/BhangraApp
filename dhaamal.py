@@ -1,6 +1,6 @@
 import math
 from pickle import load
-hashtable=load(open("RiyaDD2.pkl","rb"))
+hashtable=load(open("TegBadDump.pkl","rb"))
 
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
@@ -249,28 +249,8 @@ def dhammalKneeAngle(dhammalList):
             if not (almostEqual(leftKneeAngle,90, MARGINERROR)):
                 penalties+=1
             countDhammals+=1
-    percentageRight=(countDhammals-penalties)/countDhammal
+    percentageRight=(countDhammals-penalties)/countDhammals
     return percentageRight
-
-
-#def gradeDhammal(dhammalList):
-    #first grade if knee is over hip
-    #f : 0 to negative
-    #d: 0 to 5
-    #c: 5-10
-    #b: 10-15
-    #a: 15-30
-    dhammalKneeAngle(dhammalList)
-    # percentageDhammalArms=dhammalArms(dhammalList) #reutnrs a percentage like .95
-    
-    #grade 90 
-
-
-purpl=dhammal(hashtable)
-print(purpl)
-print("length of dhammal=", len(purpl))
-print(gradeDhammal(purpl))
-
 
 def kneeAboveHip(dhammalList):
     maxPos = []
@@ -292,6 +272,34 @@ def kneeAboveHip(dhammalList):
             continue
     return score/len(maxPos)
     
+
+
+def gradeDhammal(dhammalList): 
+    #reutnrs a percentage like .95
+    percentageKneeAngle=dhammalKneeAngle(dhammalList) #weight 2
+    percentageDhammalArms=dhammalArms(dhammalList)  #weight 1
+    percentageKneeHeight=kneeAboveHip(dhammalList) #weight 2
+    kneeAngleFeedback=""
+    armFeedback=""
+
+    if percentageKneeAngle<.92:
+        kneeAngleFeedback=giveKneeAngleFeedback(percentageKneeAngle)
+    if percentageDhammalArms<.92:
+        armFeedback=giveArmFeedback(percentageDhammalArms)
+    if percentageKneeHeight<.92:
+        kneeHeightFeedback=giveKneeHeightFeedback(percentageKneeHeight)
+
+
+    #give weights
+    total=round((2*percentageKneeAngle+percentageDhammalArms+2*percentageKneeHeight)*2, 1) #will give a number like 9.8
+    return total
+
+purpl=dhammal(hashtable)
+print(purpl)
+print("length of dhammal=", len(purpl))
+print(gradeDhammal(purpl))
+
+
 
 
 
