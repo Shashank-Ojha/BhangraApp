@@ -1,4 +1,14 @@
+.jumbotron{
+    background-color: red;
+    
+}
 
+
+body{
+    
+    background-image: url("../images/elite.jpg") ;
+    
+}
 
 /* ==========================================================================
    Author's custom styles
