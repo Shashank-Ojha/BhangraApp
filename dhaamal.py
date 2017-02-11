@@ -2,7 +2,7 @@ import math
 import random
 from pickle import load
 
-hashtable=load(open("TegBadDump.pkl","rb"))
+hashtable=load(open("SaveFile.pkl","rb"))
 
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1

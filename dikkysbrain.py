@@ -2,7 +2,7 @@ import math
 import random
 from pickle import load
 
-hashtable=load(open("PunjabTesting2.pkl","rb"))
+hashtable=load(open("SaveFile.pkl","rb"))
 
 
 def distance(p1, p2):
