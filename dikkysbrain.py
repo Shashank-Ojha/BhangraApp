@@ -215,9 +215,7 @@ def punjab(hashtable):
         #     if rightHandToShoulderNext>minDistRightHandToShoulder or leftHandToShoulderNext> : #might be buggy
         #         #this is the end of punjab
 
-yello=punjab(hashtable)
-print(yello)  
-print ("length of punjab=", len(yello))      
+
     
 
 def newDot(v1,v2):
@@ -262,12 +260,14 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
                 #A - 
 
     ##### REGULARITY GRADE #####
+    regScore = 0
     # @max length, the angle between shoulder and hand should be (Fairly) consistent
     # we assume the first large tuple of each small list is the max length
     maxPosList = list()
     for punjab in punjabList:
         maxPosList.append(punjab[0])
     # for each maxlength, calculate the angle between shoulder height and elbow
+    calcPosList = list() # the output of angle calculations
     for bigtuple in maxPosList: 
         #right elbow angle 
         rightShoulderHeightP1 = (bigtuple[2][0], bigtuple[4][1], bigtuple[4][2], bigtuple[4][3]) #takes everything  of right shoulder except x value, which is from right elbow
@@ -276,13 +276,13 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         (v1,v2) = getVectors(bigtuple[4], rightShoulderHeightP1, bigtuple[4], rightElbowP4)
         rightAngle = newAngle(v1,v2) # in radians
         #left elbow hangle
-        # leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
-        # leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
-        # # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
-        # (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
-        # leftAngle = angle(v1,v2) # in radians
+        leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
+        leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
+        # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
+        (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
+        leftAngle = angle(v1,v2) # in radians
 
-        (v1,v2) = getVectors(bigtuple[4], bigtuple[2], bigtuple[2], bigtuple[0])
+        #(v1,v2) = getVectors(bigtuple[4], bigtuple[2], bigtuple[2], bigtuple[0])
         #rightAngle = newAngle(v1,v2)
         #print(180-math.degrees(rightAngle))
         #print(180-math.degrees(leftAngle))
@@ -291,8 +291,131 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         # print(bigtuple[4])
         # print(rightElbowP4)
         # print(v1,v2)
-        print(math.degrees(rightAngle))
+        #print(math.degrees(rightAngle), math.degrees(leftAngle))
+        calcPosList.append((math.degrees(leftAngle), math.degrees(rightAngle))) # (left angle, right angle)
 
+    angleRightSum = 0
+    angleLeftSum = 0
+    counter = 0
+    for angleTuple in calcPosList:
+        angleLeftSum += angleTuple[0]
+        angleRightSum += angleTuple[1]
+        counter += 1
+
+    angleLeftAvg = angleLeftSum/counter
+    angleRightAvg = angleRightSum/counter
+    angleDiff = abs(angleLeftAvg - angleRightAvg)
+
+    print(angleLeftAvg, angleRightAvg)
+    print(angleDiff)
+# grade: give angle similarity score
+    if (angleDiff <= 5): 
+        regScore += 5
+    elif (angleDiff <= 10): 
+        regScore += 4
+    elif (angleDiff <= 15): 
+        regScore += 3
+    elif (angleDiff <= 20): 
+        regScore += 2
+    elif (angleDiff <= 25): 
+        regScore += 1
+    else:
+        regScore += 0
+
+# grade: how close is the angle to 45 degrees? LEFT ARM
+    angleGradeL = angleLeftAvg - 45
+    if (angleGradeL <= 5): 
+        regScore += 5
+    elif (angleGradeL <= 10): 
+        regScore += 4
+    elif (angleGradeL <= 15): 
+        regScore += 3
+    elif (angleGradeL <= 20): 
+        regScore += 2
+    elif (angleGradeL <= 25): 
+        regScore += 1
+    else:
+        regScore += 0
+
+# grade: how close is the angle to 45 degrees? RIGHT ARM
+    angleGradeR = angleRightAvg - 45
+    if (angleGradeR <= 5): 
+        regScore += 5
+    elif (angleGradeR <= 10): 
+        regScore += 4
+    elif (angleGradeR <= 15): 
+        regScore += 3
+    elif (angleGradeR <= 20): 
+        regScore += 2
+    elif (angleGradeR <= 25): 
+        regScore += 1
+    else:
+        regScore += 0
+
+
+    ##### HEIGHT OF HANDS GRADE #####
+    yLeftList = list()
+    yRightList = list()
+    for bigtuple in maxPosList:
+        yLeftList.append(bigtuple[1][1])
+        yRightList.append(bigtuple[0][1])
+
+    sum1 = 0
+    for k in range(0, len(yLeftList)):
+        print(abs(yLeftList[k] - yRightList[k]) * 100)
+        sum1 += abs(yLeftList[k] - yRightList[k])
+
+    heightDiffAvg = (sum1 / len(yLeftList))*100 #in cm
+
+# grade: HeightDifference between your two hands - gotta be consistent (#4)
+    if (heightDiffAvg <= 10): 
+        regScore += 5
+    elif (heightDiffAvg <= 15): 
+        regScore += 4
+    elif (heightDiffAvg <= 20): 
+        regScore += 3
+    elif (heightDiffAvg <= 25): 
+        regScore += 2
+    elif (heightDiffAvg <= 30): 
+        regScore += 1
+    else:
+        regScore += 0
+
+    ##### CHECK IF HANDS GO UP TO ROUGHLY SAME Y EACH TIME GRADE #####
+    leftDiff = abs(max(yLeftList) - min(yLeftList))
+    rightDiff = abs(max(yRightList) - min(yRightList))
+
+    print(min(yLeftList), rightDiff)
+# grade: are your hands going to the same areas?
+    if (leftDiff <= 10 and rightDiff <= 10): 
+        regScore += 5
+    elif (leftDiff <= 15 and rightDiff <= 15): 
+        regScore += 4
+    elif (leftDiff <= 20 and rightDiff <= 20): 
+        regScore += 3
+    elif (leftDiff <= 25 and rightDiff <= 25): 
+        regScore += 2
+    elif (leftDiff <= 30 and rightDiff <= 30): 
+        regScore += 1
+    else:
+        regScore += 0
+
+    print (regScore/5)
+
+    ##### HANDS SHOULD BE OUTSIDE ELBOW GRADE #####
+
+
+
+
+
+    ##### KNEE GOES UP AT SAME TIME AS HAND GRADE #####
+
+
+
+
+yello=punjab(hashtable)
+print(yello)  
+print ("length of punjab=", len(yello))      
 
 print("start of test")
 print(gradePunjab(yello))
