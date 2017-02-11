@@ -545,14 +545,15 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
     punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore)
 
 
+return 0
+punjab(hashtable)
 
-yello=punjab(hashtable)
-print(yello)  
-print ("length of punjab=", len(yello))      
+# print(yello)  
+# print ("length of punjab=", len(yello))      
 
-print("start of test")
-print(gradePunjab(yello))
-print("it worked")
+# print("start of test")
+# print(gradePunjab(yello))
+# print("it worked")
 
 
     # rightHandList=hashtable[21]

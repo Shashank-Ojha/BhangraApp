@@ -356,7 +356,7 @@ def gradeDhammal(dhammalList):
     feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, total)
     
 
-# purpl=dhammal(hashtable)
+dhammal(hashtable)
 # print(purpl)
 # print("length of dhammal=", len(purpl))
 # print(gradeDhammal(purpl))
