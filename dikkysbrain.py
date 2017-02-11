@@ -1,6 +1,6 @@
 import math
 from pickle import load
-hashtable=load(open("PunjabTesting2.pkl","rb"))
+hashtable=load(open("TegPickleDump.pkl","rb"))
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
     (x2, y2, z2, t2) = p2
@@ -83,16 +83,16 @@ def gradePunjab(punjabList):
 
 def getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances, hashtable):
     for i in range(1,len(rightHandToShoulderDistances)):
-        if delta(rightHandToShoulderDistances[-1], rightHandToShoulderDistances[-2]>0):
+        if delta(rightHandToShoulderDistances[i], rightHandToShoulderDistances[i-1])>0:
             rightHandToShoulderDistances[i-1]=1 #means up 
         else:
-            rightHandToShoulderOnes[i-1]=-1 #means down
-        if delta(leftHandToShoulderDistances[-1], lefttHandToShoulderDistances[-2]>0):
-            lefttHandToShoulderDistances[i-1]=1
+            rightHandToShoulderDistances[i-1]=-1 #means down
+        if delta(leftHandToShoulderDistances[i], leftHandToShoulderDistances[i-1])>0:
+            leftHandToShoulderDistances[i-1]=1
         else:
-            lefttHandToShoulderDistances[i-1]=-1
-    rightHandToShoulderDistances[-1]=[]
-    leftHandToShoulderDistances[-1]=[]
+            leftHandToShoulderDistances[i-1]=-1
+    rightHandToShoulderDistances.pop()
+    leftHandToShoulderDistances.pop()
     SERIESLEN=3
     punjabList=[]
     startPunjab=None
@@ -102,6 +102,7 @@ def getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances,
     leftElbowList=hashtable[12]
     rightShoulderList=hashtable[23]
     leftShoulderList=hashtable[13]
+    seenNegOnes=False
     #look for pattern
     for i in range(len(rightHandToShoulderDistances)-SERIESLEN):
         rightHand=rightHandList[i] 
@@ -111,11 +112,24 @@ def getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances,
         rightShoulder=rightShoulderList[i]
         leftShoulder= leftShoulderList[i]
         if ((rightHandToShoulderDistances[i]==1 and rightHandToShoulderDistances[i+1:i+SERIESLEN+1]==[1]*SERIESLEN) or 
-            (leftHandToShoulderDistances[i]==1 and lefttHandToShoulderDistances[i+1:i+SERIESLEN+1]==[1]*SERIESLEN)) :
-            punjabList.append([(rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)])
-            continue
-        elif len(punjabList)>=1:
-            punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder))
+            (leftHandToShoulderDistances[i]==1 and leftHandToShoulderDistances[i+1:i+SERIESLEN+1]==[1]*SERIESLEN)):
+            punjabList.append([(rightHand, leftHand, rightElbow,leftElbow, rightShoulder, leftShoulder)])
+            print("first punjab in for loop")
+            j=i
+            while (j<len(rightHandToShoulderDistances)-SERIESLEN): 
+                print("in while")
+                print("rightHandToShoulderDistances[j+1:j+1+SERIESLEN]", rightHandToShoulderDistances[j+1:j+1+SERIESLEN])
+                if seenNegOnes and rightHandToShoulderDistances[j+1:j+1+SERIESLEN]==[1]*SERIESLEN:
+                    #we are done
+                    punjabList.append([(rightHandList[j], leftHandList[j], rightElbowList[j], leftElbowList[j], rightShoulderList[j], leftShoulderList[j])])
+                    seenNegOnes=False
+                    continue
+                if rightHandToShoulderDistances[j:j+SERIESLEN]==[-1]* SERIESLEN:
+                    seenNegOnes=True
+                punjabList[-1].append((rightHandList[j], leftHandList[j], rightElbowList[j], leftElbowList[j], rightShoulderList[j], leftShoulderList[j]))
+                j+=1
+            punjabList.pop()
+            break
     return punjabList
 
 def punjab(hashtable):
@@ -171,10 +185,9 @@ def punjab(hashtable):
         leftHandToElbow=distance(leftHand, leftElbow) #integer value
         leftElbowToShoulder=distance(leftElbow, leftShoulder)
         leftHandToShoulder=distance(leftHand, leftShoulder)
-        print ("righthandtoshoulder=", rightHandToShoulder)
         rightHandToShoulderDistances.append(rightHandToShoulder)
         leftHandToShoulderDistances.append(leftHandToShoulder)
-    punjabList=getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances)
+    punjabList=getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances, hashtable)
     return punjabList
 
     #     if rightHandToShoulder>maxDistRightHandToShoulder or leftHandToShoulder>maxDistLeftHandToShoulder: #might be buggy maybe switch to and?
