@@ -59,14 +59,24 @@ def punjab(hashtable):
     rightHipList = hashtable[43]
     rightKneeList = hashtable[42]
     rightFootList = hashtable[41]
-    for i in range(length(rightHandList)):
+    maxDistRightHandToShoulder=-100
+    maxDistLeftHandToShoulder=-100
+    minDistRightHandToShoulder=1000
+    minDistLeftHandToShoulder=1000
+    startPunjab=None
+    punjabList=[]  #this is wack  [ [((),(),()),((),(),())], [((),(),()),((),(),())] ]
+                           #        ^^^                       
+                           #       this is one punjab movement
+                           #         each point in moment in time for each body pos
+                           #           (x,y,z,t) tuple for each body pos
+    for i in range(length(rightHandList)-1): #this separates punjabs
         #will be a tuple(x,y,z,t)
         rightHand=rightHandList[i] 
-        leftHandList=leftHandList[i]
-        rightElbowList=rightElbowList[i]
-        leftElbowList=leftElbowList[i]
-        rightShoulderList=rightShoulderList[i]
-        leftShoulderList= leftShoulderList[i]
+        leftHand=leftHandList[i]
+        rightElbow=rightElbowList[i]
+        leftElbow=leftElbowList[i]
+        rightShoulder=rightShoulderList[i]
+        leftShoulder= leftShoulderList[i]
         neckList=neckList[i]
         chestList=chestList[i]
         bund=bundList[i]
@@ -76,4 +86,54 @@ def punjab(hashtable):
         rightHip =rightHipList[i]
         rightKnee = rightKneeList[i]
         rightFoot= rightFootList[i]
+        rightHandToElbow=distance(rightHand, rightElbow) #integer value
+        rightElbowToShoulder=distance(rightElbow, rightShoulder)
+        rightHandToShoulder=distance(rightHand, rightShoulder)
+        leftHandToElbow=distance(leftHand, leftElbow) #integer value
+        leftElbowToShoulder=distance(leftElbow, leftShoulder)
+        leftHandToShoulder=distance(leftHand, leftShoulder)
+        if rightHandToShoulder>maxDistRightHandToShoulder or leftHandToShoulder>maxDistLeftHandToShoulder: #might be buggy maybe switch to and?
+            rightHandToShoulderNext=distance(rightHandList[i+1],rightShoulderList[i+1])
+            leftHandToShoulderNext=distance(leftHandList[i+1],leftShoulderList[i+1])
+            maxDistRightHandToShoulder=rightHandToShoulder
+            if rightHandToShoulderNext<maxDistRightHandToShoulder or leftHandToShoulderNext<maxDistLeftHandToShoulder: #might be buggy
+                maxDistRightHandToShoulder=-100
+                if startPunjab==None or startPunjab==False:
+                    startPunjab=True
+                    punjabList.append([(rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)])
+                    continue
+                if startPunjab==True:
+                    startPunjab=False #end=false
+                    punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder))
+                    continue
+        punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder))
+
+
+
+
+
+
+              
+
+        # could possibly be used for scoring
+        # if rightHandToShoulder<miDistRightHandToShoulder or leftHandToShoulder<minDistLeftHandToShoulder: #might  be buggy
+        #     rightHandToShoulderNext=distance(rightHandList[i+1],rightShoulderList[i+1])
+        #     leftHandToShoulderNext=distance(leftHandList[i+1],leftShoulderList[i+1])
+        #     if rightHandToShoulderNext>minDistRightHandToShoulder or leftHandToShoulderNext> : #might be buggy
+        #         #this is the end of punjab
+
+
+        
+        #WRITE THIS HELPER FUNCTION
+        startPunjab=isStartPunjab(rightHandList, leftHandList, rightElbowList, leftElbowList, rightShoulderList, leftShoulderList, i) #bool value        
+       endPunjab=isEndPunjab(rightHandList, leftHandList, rightElbowList, leftElbowList, rightShoulderList, leftShoulderList, i) #bool value
+       
+def isStartPunjab(rightHandList, leftHandList, rightElbowList, leftElbowList, rightShoulderList, leftShoulderList, i):
+    
+def isEndPunjab(rightHandList, leftHandList, rightElbowList, leftElbowList, rightShoulderList, leftShoulderList, i):
+    SECONDS=.5
+    if i < SECONDS * 10:
+    #only look forwards
+    if i>SECONDS*10:
+    #only look backwards
 
