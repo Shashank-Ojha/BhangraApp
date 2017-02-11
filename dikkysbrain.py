@@ -539,11 +539,12 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
 
     ###### Overall Score ######
     finalPunjabScore = (regScore/5)*2
-    punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore)
-
+    everything=punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore)
+    return everything
 
 def main():
-    punjab(hashtable)
+    final=punjab(hashtable)
+    return final
 
 # print(yello)  
 # print ("length of punjab=", len(yello))      

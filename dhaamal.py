@@ -353,10 +353,11 @@ def gradeDhammal(dhammalList):
 
     #give weights
     total=round((2*percentageKneeAngle+percentageDhammalArms+2*percentageKneeHeight)*2, 1) #will give a number like 9.8
-    feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, total)
-    
+    final=feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, total)
+    return final
 def main():
-    dhammal(hashtable)
+    final=dhammal(hashtable)
+    return final
 # print(purpl)
 # print("length of dhammal=", len(purpl))
 # print(gradeDhammal(purpl))
