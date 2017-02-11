@@ -1,6 +1,6 @@
 import math
 from pickle import load
-hashtable=load(open("TegPickleDump.pkl","rb"))
+hashtable=load(open("PunjabTesting2.pkl","rb"))
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
     (x2, y2, z2, t2) = p2
@@ -62,23 +62,23 @@ def delta(x1, x2):
     return (x2-x1)
 
 
-def gradePunjab(punjabList):
-    #arms
-    for punjab in punjabList: #each punjab
-        for moment in punjab:
-            #0-rightHand
-            #1-leftHand
-            #2-rightElbow
-            #3-leftElbow
-            #4-rightShoulder
-            #5-leftShoulder
-            #(x,y,z,t)
-            rightElbowAngle=angle(getVectors(rightShoulder, rightElbow, rightElbow, rightHand)) #check this ordering later when im not tired af
-            leftElbowAngle=angle(getVectors(leftShoulder, leftElbow, leftElbow, leftHand)) #check ordering
-            rightElbowAngleDiff=math.abs(rightElbowAngle*(360/(2*math.pi))-170)
-            lefttElbowAngleDiff=math.abs(leftElbowAngle*(360/(2*math.pi))-170)
-            #margin of error for elbow angles:
-                #A - 
+# def gradePunjab(punjabList):
+#     #arms
+#     for punjab in punjabList: #each punjab
+#         for moment in punjab:
+#             #0-rightHand
+#             #1-leftHand
+#             #2-rightElbow
+#             #3-leftElbow
+#             #4-rightShoulder
+#             #5-leftShoulder
+#             #(x,y,z,t)
+#             rightElbowAngle=angle(getVectors(rightShoulder, rightElbow, rightElbow, rightHand)) #check this ordering later when im not tired af
+#             leftElbowAngle=angle(getVectors(leftShoulder, leftElbow, leftElbow, leftHand)) #check ordering
+#             rightElbowAngleDiff=math.abs(rightElbowAngle*(360/(2*math.pi))-170)
+#             lefttElbowAngleDiff=math.abs(leftElbowAngle*(360/(2*math.pi))-170)
+#             #margin of error for elbow angles:
+#                 #A - 
 
 
 def getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances, hashtable):
@@ -262,6 +262,24 @@ print ("length of punjab=", len(yello))
     (0.35103851556777954, 0.3210884928703308, 2.8813986778259277, 6225), 
     (0.05853675305843353, 0.31353265047073364, 2.9315340518951416, 6225))]
 
+def newDot(v1,v2):
+    # (x1,y1) = (v1[0],v1[1])
+    # (x2,y2) = (v1[0],v1[1])
+    # length1 = (x1**2 + y1**2)**0.5
+    # length2 = (x2**2 + y2**2)**0.5
+    v1n = (v1[1], v1[2], 0)
+    v1n = (v1[1], v1[2], 0)
+    return dot(v1,v2)
+
+
+def newAngle(v1,v2):
+    newDotp = newDot(v1, v2)
+    m1 = magnitude(v1)
+    m2 = magnitude(v2)
+    return math.acos(newDotp/(m1*m2)) #rad
+
+
+
 
 def gradePunjab(punjabList): # Master Grading Function for Punjab, will return score
     #arms
@@ -294,16 +312,21 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         #right elbow angle 
         rightShoulderHeightP1 = (bigtuple[2][0], bigtuple[4][1], bigtuple[4][2], bigtuple[4][3]) #takes everything  of right shoulder except x value, which is from right elbow
         rightElbowP4 = (bigtuple[2][0], bigtuple[2][1], bigtuple[4][2], bigtuple[2][3])
-        (v1,v2) = getVectors(rightShoulderHeightP1, bigtuple[4], bigtuple[4], rightElbowP4)
-        rightAngle = angle(v1,v2) # in radians
+        #(v1,v2) = getVectors(rightShoulderHeightP1, bigtuple[4], bigtuple[4], rightElbowP4)
+        (v1,v2) = getVectors(bigtuple[4], rightShoulderHeightP1, bigtuple[4], rightElbowP4)
+        rightAngle = newAngle(v1,v2) # in radians
         #left elbow hangle
         leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
         leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
-        (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
+        # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
+        (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
         leftAngle = angle(v1,v2) # in radians
 
-        print(180-math.degrees(rightAngle))
-        #print(math.degrees(leftAngle))
+        #print(180-math.degrees(rightAngle))
+        #print(180-math.degrees(leftAngle))
+        print(rightShoulderHeightP1)
+        print(rightShoulder)
+        print(math.degrees(rightAngle))
 
 
 print("start of test")
