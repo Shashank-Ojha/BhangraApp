@@ -260,7 +260,7 @@ def dhammalKneeAngle(dhammalList):
     #c: 5-10
     #b: 10-15
     #a: 15-30
-    dhammalKneeAngle(dhammalList)
+    # dhammalKneeAngle(dhammalList)
     # percentageDhammalArms=dhammalArms(dhammalList) #reutnrs a percentage like .95
     
     #grade 90 
@@ -279,15 +279,15 @@ def giveArmFeedback(score):
         feedback = feedbackA[feedback_num]
     else:
         feedbackG = ['Great job with your arms, keep it popin!', 
-        'Nice arms gabbro!']
+        'Nice arms gabbroo!']
         feedback_num = random.randint(0, len(feedbackG)-1)
         feedback = feedbackG[feedback_num]
     return feedback
 
-purpl=dhammal(hashtable)
-print(purpl)
-print("length of dhammal=", len(purpl))
-print(gradeDhammal(purpl))
+# purpl=dhammal(hashtable)
+# print(purpl)
+# print("length of dhammal=", len(purpl))
+# print(gradeDhammal(purpl))
 
 
 def kneeAboveHip(dhammalList):
@@ -323,6 +323,7 @@ def giveKneeAngleFeedback(percentageKneeAngle):
     else: 
         feedback="Great work! Your dhammal knee angle looks great! Keep it up!"
     return feedback
+
 def giveKneeHeightFeedback(percentageKneeHeight):
     if percentageKneeHeight<.75:
         feedbackF=["Try to get your knee above your hips--it might help to lean backwards a bit!", "Drive with your knee to get it above your hip!"]
@@ -332,14 +333,16 @@ def giveKneeHeightFeedback(percentageKneeHeight):
         feedback=feedbackA[random.randint(0,1)]
     else: 
         feedback="Your dhaamal knee height is good! Keep up the good form!"
+    return feedback
 
-def feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight):
+def feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, score):
     kneeAngleFeedback=giveKneeAngleFeedback(percentageKneeAngle)
     armFeedback=giveArmFeedback(percentageDhammalArms)
-    kneeHeightFeedback=giveKneeHeightFeedback(percentageKneeHeight)
+    kneeHeightFeedback=kneeAboveHip(percentageKneeHeight)
     shouldersFeedback="Don't forget to always get that shoulder bounce!"
     proTipFeedback="Pro Tip: On double dhammal, try to get a dip on every odd beat!"
-    return (kneeAngleFeedback + "\n" + armFeedback + "\n" +kneeHeightFeedback+"\n"+ shouldersFeedback+"\n"+proTipFeedback)
+    finalScore=str(score)
+    return ("Your score: "+ finalScore+ "\n"+ kneeAngleFeedback + "\n" + armFeedback + "\n" +kneeHeightFeedback+"\n"+ shouldersFeedback+"\n"+proTipFeedback)
 def gradeDhammal(dhammalList): 
     #reutnrs a percentage like .95
     percentageKneeAngle=dhammalKneeAngle(dhammalList) #weight 2
@@ -350,12 +353,13 @@ def gradeDhammal(dhammalList):
 
     #give weights
     total=round((2*percentageKneeAngle+percentageDhammalArms+2*percentageKneeHeight)*2, 1) #will give a number like 9.8
-    return total
+    feedbackDhammal(percentageKneeAngle, percentageDhammalArms,percentageKneeHeight, total)
+    
 
-purpl=dhammal(hashtable)
-print(purpl)
-print("length of dhammal=", len(purpl))
-print(gradeDhammal(purpl))
+# purpl=dhammal(hashtable)
+# print(purpl)
+# print("length of dhammal=", len(purpl))
+# print(gradeDhammal(purpl))
 
 
 

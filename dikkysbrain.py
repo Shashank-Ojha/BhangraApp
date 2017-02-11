@@ -321,14 +321,15 @@ def sameHeightFeedback(sameY):
         feedbackF=["Try to keep your right and left arm extension the same throughout punjab. Try pumping more evenly.", "Your right and left arms are not extending the same distance away from your shoulders. Try to keep it more even!"]
         feedback=feedbackF[random.randint(0,1)]
     else:
-        feedback="Good punjab arm form! It looks great!"
-def punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY):
+        feedback="Good punjab arm form! Nice work gabbroo!"
+def punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore):
     angle=angleFeedback(angleScore)
     leftArm=leftArmFeedback(leftAngle)
     rightArm=rightArmFeedback(rightAngle)
     heightDiff=heightDiffFeedback(heightDiffScore)
     sameHeight=sameHeightFeedback(sameY)
-    return (angle+"\n"+leftArm+"\n"+rightArm+"\n"+heightDiff+"\n"+sameHeight)
+    score=str(finalPunjabScore)
+    return ("Your score: " + score +"\n" +angle+"\n"+leftArm+"\n"+rightArm+"\n"+heightDiff+"\n"+sameHeight)
 
 def gradePunjab(punjabList): # Master Grading Function for Punjab, will return score
     #arms
@@ -530,7 +531,7 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         regScore += 0
         sameY=0
 
-    punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY)
+    
 
     ##### HANDS SHOULD BE OUTSIDE ELBOW GRADE #####
 
@@ -540,7 +541,8 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
 
 
     ###### Overall Score ######
-    finalPunjabScore = regScore/5
+    finalPunjabScore = (regScore/5)*2
+    punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore)
 
 
 
