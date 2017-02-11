@@ -531,22 +531,19 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         regScore += 0
         sameY=0
 
-    
-
     ##### HANDS SHOULD BE OUTSIDE ELBOW GRADE #####
 
     ##### KNEE GOES UP AT SAME TIME AS HAND GRADE #####
 
     punjabKneeScore = punjabKneeAngle(punjabList) #currently not in use! Bit too inaccurate
 
-
     ###### Overall Score ######
     finalPunjabScore = (regScore/5)*2
     punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore)
 
 
-return 0
-punjab(hashtable)
+def main():
+    punjab(hashtable)
 
 # print(yello)  
 # print ("length of punjab=", len(yello))      
@@ -554,14 +551,6 @@ punjab(hashtable)
 # print("start of test")
 # print(gradePunjab(yello))
 # print("it worked")
-
-
-    # rightHandList=hashtable[21]
-    # leftHandList=hashtabble[11]
-    # rightElbowList=hashtable[22]
-    # leftElbowList=hashtable[12]
-    # rightShoulderList=hashtable[23]
-    # leftShoulderList=hashtable[13]
 
 
 
