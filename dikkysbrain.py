@@ -286,6 +286,50 @@ def punjabKneeAngle(dhammalList):
     return percentageRight
 
 
+def angleFeedback(angleScore):
+    if angleScore<4:
+        feedbackF=["Try to keep your hands in base position and keep pushing your elbows out!", "Keep your elbow angle at around 175 degrees!"]
+        feedback=feedbackF[random.randint(0,1)]
+    else:
+        feedback="Good job with elbow angles!"
+    return feedback
+
+def leftArmFeedback(leftAngle):
+    if leftAngle<4:
+        feedbackF=["Keep your left arm at 45 degrees when at maximum extension!", "Try to fully complete the motion with your left arm!"]
+        feedback=feedbackF[random.randint(0,1)]
+    else: 
+        feedback="Good job keeping your left arm at 45 degrees during punjab!"
+
+def rightArmFeedback(rightAngle):
+    if rightAngle<4:
+        feedbackF=["Keep your right arm at 45 degrees when at maximum extension!", "Try to fully complete the motion with your right arm!"]
+        feedback=feedbackF[random.randint(0,1)]
+    else: 
+        feedback="Great job keeping your right arm at 45 degrees during punjab!"
+
+def heightDiffFeedback(heightDiffScore):
+    if heightDiffScore<4:
+        feedbackF=["Your right and left arms extend to different heights during punjab. Try to keep them more even!", "Push out your right and left arms to the same distance during punjab!"]
+        feedback=feedbackF[random.randint(0,1)]
+    else:
+        feedback="Great job coordinating both your punjab arms! Keep up the good form!"
+
+
+def sameHeightFeedback(sameY):
+    if sameY<4:
+        feedbackF=["Try to keep your right and left arm extension the same throughout punjab. Try pumping more evenly.", "Your right and left arms are not extending the same distance away from your shoulders. Try to keep it more even!"]
+        feedback=feedbackF[random.randint(0,1)]
+    else:
+        feedback="Good punjab arm form! It looks great!"
+def punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY):
+    angle=angleFeedback(angleScore)
+    leftArm=leftArmFeedback(leftAngle)
+    rightArm=rightArmFeedback(rightAngle)
+    heightDiff=heightDiffFeedback(heightDiffScore)
+    sameHeight=sameHeightFeedback(sameY)
+    return (angle+"\n"+leftArm+"\n"+rightArm+"\n"+heightDiff+"\n"+sameHeight)
+
 def gradePunjab(punjabList): # Master Grading Function for Punjab, will return score
     #arms
     #for punjab in punjabList: #each punjab - involved 
@@ -352,49 +396,68 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
     angleDiff = abs(angleLeftAvg - angleRightAvg)
 
 
-# grade: give angle similarity score
+# grade: give angle similarity score. #elbow angles
     if (angleDiff <= 5): 
         regScore += 5
+        angleScore=5
     elif (angleDiff <= 10): 
         regScore += 4
+        angleScore=4
     elif (angleDiff <= 15): 
         regScore += 3
+        angleScore=3
     elif (angleDiff <= 20): 
         regScore += 2
+        angleScore=2
     elif (angleDiff <= 25): 
         regScore += 1
+        angleScore=1
     else:
         regScore += 0
+        angleScore=0
+
 
 # grade: how close is the angle to 45 degrees? LEFT ARM
     angleGradeL = angleLeftAvg - 45
     if (angleGradeL <= 5): 
         regScore += 5
+        leftAngle=5
     elif (angleGradeL <= 10): 
         regScore += 4
+        leftAngle=4
     elif (angleGradeL <= 15): 
         regScore += 3
+        leftAngle=3
     elif (angleGradeL <= 20): 
         regScore += 2
+        leftAngle=2
     elif (angleGradeL <= 25): 
         regScore += 1
+        leftAngle=1
     else:
         regScore += 0
+        leftAngle=0
 
 # grade: how close is the angle to 45 degrees? RIGHT ARM
     angleGradeR = angleRightAvg - 45
     if (angleGradeR <= 5): 
         regScore += 5
+        rightAngle=5
     elif (angleGradeR <= 10): 
         regScore += 4
+        rightAngle=4
     elif (angleGradeR <= 15): 
         regScore += 3
+        rightAngle=3
     elif (angleGradeR <= 20): 
         regScore += 2
+        rightAngle=2
     elif (angleGradeR <= 25): 
         regScore += 1
+        rightAngle=1
     else:
         regScore += 0
+        rightAngle=0
 
 
     ##### HEIGHT OF HANDS GRADE #####
@@ -413,16 +476,22 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
 # grade: HeightDifference between your two hands - gotta be consistent (#4)
     if (heightDiffAvg <= 10): 
         regScore += 5
+        heightDiffScore=5
     elif (heightDiffAvg <= 15): 
         regScore += 4
+        heightDiffScore=4
     elif (heightDiffAvg <= 20): 
         regScore += 3
+        heightDiffScore=3
     elif (heightDiffAvg <= 25): 
         regScore += 2
+        heightDiffScore=2
     elif (heightDiffAvg <= 30): 
         regScore += 1
+        heightDiffScore=1
     else:
         regScore += 0
+        heightDiffScore=0
 
     ##### CHECK IF HANDS GO UP TO ROUGHLY SAME Y EACH TIME GRADE #####
     # remove abnormalities (if difference is greater thatn 40 cm just ignore the value)
@@ -444,17 +513,24 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
 # grade: are your hands going to the same areas? (#5)
     if (leftDiff <= 15 and rightDiff <= 15): 
         regScore += 5
+        sameY=5
     elif (leftDiff <= 20 and rightDiff <= 20): 
         regScore += 4
+        sameY=4
     elif (leftDiff <= 25 and rightDiff <= 25): 
         regScore += 3
+        sameY=3
     elif (leftDiff <= 30 and rightDiff <= 30): 
         regScore += 2
+        sameY=2
     elif (leftDiff <= 35 and rightDiff <= 35): 
         regScore += 1
+        sameY=1
     else:
         regScore += 0
+        sameY=0
 
+    punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY)
 
     ##### HANDS SHOULD BE OUTSIDE ELBOW GRADE #####
 
