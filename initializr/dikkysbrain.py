@@ -41,5 +41,39 @@ def normalize(v):
 	return (x1/m, y1/m, z1/m)
 
 
-
+def punjab(hashtable):
+    #pretend we have init already written
+    #pretend we have placeholder init vars
+    rightHandList=hashtable[21]
+    leftHandList=hashtable[11]
+    rightElbowList=hashtable[22]
+    leftElbowList=hashtable[12]
+    rightShoulderList=hashtable[23]
+    leftShoulderList=hashtable[13]
+    neckList=hashtable[99]
+    chestList=hashtable[98]
+    bundList=hashtable[96]
+    leftHipList=hashtable[33]
+    leftKneeList=hashtable[32]
+    leftFootList=hashtable[31]
+    rightHipList = hashtable[43]
+    rightKneeList = hashtable[42]
+    rightFootList = hashtable[41]
+    for i in range(length(rightHandList)):
+        #will be a tuple(x,y,z,t)
+        rightHand=rightHandList[i] 
+        leftHandList=leftHandList[i]
+        rightElbowList=rightElbowList[i]
+        leftElbowList=leftElbowList[i]
+        rightShoulderList=rightShoulderList[i]
+        leftShoulderList= leftShoulderList[i]
+        neckList=neckList[i]
+        chestList=chestList[i]
+        bund=bundList[i]
+        leftHip= leftHipList[i]
+        leftKnee= leftKneeList[i]
+        leftFoot=leftFootList[i]
+        rightHip =rightHipList[i]
+        rightKnee = rightKneeList[i]
+        rightFoot= rightFootList[i]
 
