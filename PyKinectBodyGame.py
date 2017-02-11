@@ -80,7 +80,34 @@ class BodyGameRuntime(object):
         except: # need to catch it due to possible invalid positions (with inf)
             pass
 
+    def draw_pagh(self, joints, jointPoints):
+        
+        self.img = pygame.image.load('PAGG.png')
+        (width,height) = self.img.get_size()
+
+        p1 = (jointPoints[PyKinectV2.JointType_Head].x, jointPoints[PyKinectV2.JointType_Head].y)
+        p2 = (jointPoints[PyKinectV2.JointType_Head].x, jointPoints[PyKinectV2.JointType_Head].y)
+        p3 = (jointPoints[PyKinectV2.JointType_Head].x, jointPoints[PyKinectV2.JointType_Head].y)
+        p4 = (jointPoints[PyKinectV2.JointType_Head].x, jointPoints[PyKinectV2.JointType_Head].y)
+
+        (x0,y0) = (p1[0]-width/2,p1[1]-8.5*height/10)
+
+        #surface = self._frame
+
+        self._frame_surface.blit(self.img, (x0,y0))
+
+        try:
+            
+            pygame.draw.line(self._frame_surface, color, start, end, 8)
+        except: # need to catch it due to possible invalid positions (with inf)
+            pass
+
+
     def draw_body(self, joints, jointPoints, color):
+        #pagh
+        #pagh = pygame.image.load(os.path.join('data', 'PAGG.png'))
+        self.draw_pagh(joints, jointPoints)
+
         # Torso
         self.draw_body_bone(joints, jointPoints, color, PyKinectV2.JointType_Head, PyKinectV2.JointType_Neck);
         self.draw_body_bone(joints, jointPoints, color, PyKinectV2.JointType_Neck, PyKinectV2.JointType_SpineShoulder);
