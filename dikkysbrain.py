@@ -1,6 +1,6 @@
 import math
 from pickle import load
-hashtable=load(open("TegPickleDump.pkl","rb"))
+hashtable=load(open("RiyaPickleDump.pkl","rb"))
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
     (x2, y2, z2, t2) = p2
@@ -141,8 +141,8 @@ def getPunjabs(rightHandToShoulderDistances, leftHandToShoulderDistances, hashta
             while (j<len(rightHandToShoulderDistances)-SERIESLEN): 
                 if seenNegOnes and rightHandToShoulderDistances[j+1:j+1+SERIESLEN]==[1]*SERIESLEN:
                     #we are done
-                    punjabList.append([(rightHandList[j], leftHandList[j], rightElbowList[j], leftElbowList[j], rightShoulderList[j], leftShoulderList[j], neckList[j], chestList[j], bundList[j],
-                leftHipList[j], leftKneeList[j], leftFootList[j], rightHipList[j],rightKneeList[j], rightFootList[j])])
+                    punjabList.append([(rightHandList[j+1], leftHandList[j+1], rightElbowList[j+1], leftElbowList[j+1], rightShoulderList[j+1], leftShoulderList[j+1], neckList[j+1], chestList[j+1], bundList[j+1],
+                leftHipList[j+1], leftKneeList[j+1], leftFootList[j+1], rightHipList[j+1],rightKneeList[j+1], rightFootList[j+1])])
                     seenNegOnes=False
                     continue
                 if rightHandToShoulderDistances[j:j+SERIESLEN]==[-1]* SERIESLEN:
@@ -279,13 +279,15 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         # (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
         # leftAngle = angle(v1,v2) # in radians
 
+        (v1,v2) = getVectors(bigtuple[4], bigtuple[2], bigtuple[2], bigtuple[0])
+        #rightAngle = newAngle(v1,v2)
         #print(180-math.degrees(rightAngle))
         #print(180-math.degrees(leftAngle))
-        print(rightShoulderHeightP1)
-        print(bigtuple[4])
-        print(bigtuple[4])
-        print(rightElbowP4)
-        print(v1,v2)
+        # print(rightShoulderHeightP1)
+        # print(bigtuple[4])
+        # print(bigtuple[4])
+        # print(rightElbowP4)
+        # print(v1,v2)
         print(math.degrees(rightAngle))
 
 
