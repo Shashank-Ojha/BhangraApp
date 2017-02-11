@@ -7,6 +7,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>CMU Bhangra - Carnegie Mellon University Bhangra</title>
 
+    <link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+  	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+  	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+
     <link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -23,12 +27,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <script type="text/javascript">
-  function changePage() {
-    window.location = "menu.html"
-  }
-
-  </script>
   <body>
 
     <!-- Navigation -->
@@ -50,18 +48,50 @@
           </div>
       </div>
     </nav>
+    <div class="text-center">
+      <h1 style="color:cadetblue">PUNJAB<h1>
 
-    <!-- Background image -->
-    <div class="bg">
-      <div class="text-center header">
-        <h1 style="font-size: 50px;">Bhangra Hero</h1>
-        <h4>by Tartan Bhangra Hackers</h4>
-        <br>
-        <button onclick="changePage()" type="button" class="btn btn-primary btn-lg">Get Dancing!</button>
+      <h3>Song Suggestions</h3>
+    </div>
+    <section class="no-padding" id="portfolio">
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <div class="col-lg-4 col-sm-6">
+                  <div class="text-center">
+                    <h1>Dhamaal<h1>
+                    <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/w9Gbl6r8ZkE?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                  <div class="text-center">
+                    <h1>Punjab<h1>
+                    <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/3vEZE9JRNxs?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                  <div class="text-center">
+                    <h1>Faslaan<h1>
+                    <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/I-fHVf7Ix6A?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br>
+    <!-- Content -->
+    <div class="container-fluid performances">
+      <div class="text-center">
+        <h2>Click Below When Done Recording<h2>
+        <button onclick="changePage()" type="button" class="btn btn-primary btn-lg">Submit</button>
+      </div>
+
+      <div class="row">
+
       </div>
     </div>
 
-   <!-- Footer -->
+    <!-- Footer -->
     <!-- <section id="footer-sec" >
 
             <div class="container">
@@ -109,11 +139,16 @@
                 </div>
                </div>
             </div>
-    </section>  -->
+    </section> -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    function changeSource(link) {
+      document.querySelector("#video").src = link;
+    }
+    </script>
   </body>
 </html>
