@@ -2,27 +2,28 @@ import math
 from pickle import load
 hashtable=load(open("PunjabTesting2.pkl","rb"))
 def distance(p1, p2):
-	(x1, y1, z1, t1) = p1
-	(x2, y2, z2, t2) = p2
-	dx = (x1-x2)**2
-	dy = (y1-y2)**2
-	dz = (z1-z2)**2
-	return math.sqrt(dx+dy+ dz)
+    (x1, y1, z1, t1) = p1
+    (x2, y2, z2, t2) = p2
+    dx = (x1-x2)**2
+    dy = (y1-y2)**2
+    dz = (z1-z2)**2
+    return math.sqrt(dx+dy+ dz)
 
 def pvector(p1, p2):
-	(x1, y1, z1, t1) = p1
-	(x2, y2, z2, t2) = p2
-	return (x2-x1, y2-y1, z2-z1)
+    (x1, y1, z1, t1) = p1
+    (x2, y2, z2, t2) = p2
+    return (x2-x1, y2-y1, z2-z1)
 
 def derivative(v1, v2, t):
-	(x1, y1, z1) = v1
-	(x2, y2, z2) = v2
-	return ((x2-x1)/t, (y2-y1)/t, (z2-z1)/t)
+    (x1, y1, z1) = v1
+    (x2, y2, z2) = v2
+    return ((x2-x1)/t, (y2-y1)/t, (z2-z1)/t)
 
 def dot(v1, v2): #p2>p1 and p4>p3
 	(x1, y1, z1) = v1
 	(x2, y2, z2) = v2
 	return (x1*x2 + y1*y2 + z1*z2)
+
 
 def getVectors(p1, p2, p3, p4): #p2>p1 and p4>p3
     (x1, y1, z1, t1) = p1
@@ -34,21 +35,21 @@ def getVectors(p1, p2, p3, p4): #p2>p1 and p4>p3
     return (v1, v2)
 
 def cross(v1, v2):
-	(x1, y1, z1) = v1
-	(x2, y2, z2) = v2
-	i = y1*z2 - y2*z1
-	j = -(x1*z2 - x2*z1)
-	k = x1*y2 - x2*y1
-	return (i, j, k)
+    (x1, y1, z1) = v1
+    (x2, y2, z2) = v2
+    i = y1*z2 - y2*z1
+    j = -(x1*z2 - x2*z1)
+    k = x1*y2 - x2*y1
+    return (i, j, k)
 
 def magnitude(v):
-	(x1, y1, z1) = v
-	return math.sqrt(x1**2 + y1**2 + z1**2)
+    (x1, y1, z1) = v
+    return math.sqrt(x1**2 + y1**2 + z1**2)
 
 def normalize(v):
-	(x1, y1, z1) = v
-	m = magnitude(v)
-	return (x1/m, y1/m, z1/m)
+    (x1, y1, z1) = v
+    m = magnitude(v)
+    return (x1/m, y1/m, z1/m)
 
 
 def angle(v1, v2):
@@ -57,7 +58,65 @@ def angle(v1, v2):
 	m2 = magnitude(v2)
 	return math.acos(dotp/(m1*m2)) #radian
 
+def delta(x1, x2):
+    return (x2-x1)
 
+
+def gradePunjab(punjabList):
+    #arms
+    for punjab in punjabList: #each punjab
+        for moment in punjab:
+            #0-rightHand
+            #1-leftHand
+            #2-rightElbow
+            #3-leftElbow
+            #4-rightShoulder
+            #5-leftShoulder
+            #(x,y,z,t)
+            rightElbowAngle=angle(getVectors(rightShoulder, rightElbow, rightElbow, rightHand)) #check this ordering later when im not tired af
+            leftElbowAngle=angle(getVectors(leftShoulder, leftElbow, leftElbow, leftHand)) #check ordering
+            rightElbowAngleDiff=math.abs(rightElbowAngle*(360/(2*math.pi))-170)
+            lefttElbowAngleDiff=math.abs(leftElbowAngle*(360/(2*math.pi))-170)
+            #margin of error for elbow angles:
+                #A - 
+
+
+def getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances, hashtable):
+    for i in range(1,len(rightHandToShoulderDistances)):
+        if delta(rightHandToShoulderDistances[-1], rightHandToShoulderDistances[-2]>0):
+            rightHandToShoulderDistances[i-1]=1 #means up 
+        else:
+            rightHandToShoulderOnes[i-1]=-1 #means down
+        if delta(leftHandToShoulderDistances[-1], lefttHandToShoulderDistances[-2]>0):
+            lefttHandToShoulderDistances[i-1]=1
+        else:
+            lefttHandToShoulderDistances[i-1]=-1
+    rightHandToShoulderDistances[-1]=[]
+    leftHandToShoulderDistances[-1]=[]
+    SERIESLEN=3
+    punjabList=[]
+    startPunjab=None
+    rightHandList=hashtable[21]
+    leftHandList=hashtable[11]
+    rightElbowList=hashtable[22]
+    leftElbowList=hashtable[12]
+    rightShoulderList=hashtable[23]
+    leftShoulderList=hashtable[13]
+    #look for pattern
+    for i in range(len(rightHandToShoulderDistances)-SERIESLEN):
+        rightHand=rightHandList[i] 
+        leftHand=leftHandList[i]
+        rightElbow=rightElbowList[i]
+        leftElbow=leftElbowList[i]
+        rightShoulder=rightShoulderList[i]
+        leftShoulder= leftShoulderList[i]
+        if ((rightHandToShoulderDistances[i]==1 and rightHandToShoulderDistances[i+1:i+SERIESLEN+1]==[1]*SERIESLEN) or 
+            (leftHandToShoulderDistances[i]==1 and lefttHandToShoulderDistances[i+1:i+SERIESLEN+1]==[1]*SERIESLEN)) :
+            punjabList.append([(rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)])
+            continue
+        elif len(punjabList)>=1:
+            punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder))
+    return punjabList
 
 def punjab(hashtable):
     #pretend we have init already written
@@ -80,12 +139,16 @@ def punjab(hashtable):
     maxDistRightHandToShoulder=-100
     maxDistLeftHandToShoulder=-100
     startPunjab=None
+    rightHandToShoulderDistances=[]
+    leftHandToShoulderDistances=[]
+    rightHandToShoulderOnes=[]#new list with the ones and negatives ones
+    leftHandToShoulderOnes=[]
     punjabList=[]  #this is wack  [ [((),(),()),((),(),())], [((),(),()),((),(),())] ]
                            #        ^^^                       
                            #       this is one punjab movement
                            #         each point in moment in time for each body pos
                            #           (x,y,z,t) tuple for each body pos
-    for i in range(len(rightHandList)-1): #this separates punjabs
+    for i in range(len(rightHandList)): #this separates punjabs
         #will be a tuple(x,y,z,t)
         rightHand=rightHandList[i] 
         leftHand=leftHandList[i]
@@ -109,25 +172,27 @@ def punjab(hashtable):
         leftElbowToShoulder=distance(leftElbow, leftShoulder)
         leftHandToShoulder=distance(leftHand, leftShoulder)
         print ("righthandtoshoulder=", rightHandToShoulder)
-        
+        rightHandToShoulderDistances.append(rightHandToShoulder)
+        leftHandToShoulderDistances.append(leftHandToShoulder)
+    punjabList=getOnesAndNegOnes(rightHandToShoulderDistances, leftHandToShoulderDistances)
+    return punjabList
 
-
-        if rightHandToShoulder>maxDistRightHandToShoulder or leftHandToShoulder>maxDistLeftHandToShoulder: #might be buggy maybe switch to and?
-            rightHandToShoulderNext=distance(rightHandList[i+1],rightShoulderList[i+1])
-            leftHandToShoulderNext=distance(leftHandList[i+1],leftShoulderList[i+1])
-            maxDistRightHandToShoulder=rightHandToShoulder
-            if rightHandToShoulderNext<maxDistRightHandToShoulder or leftHandToShoulderNext<maxDistLeftHandToShoulder: #might be buggy
-                maxDistRightHandToShoulder=-100
-                if startPunjab==None or startPunjab==False:
-                    startPunjab=True
-                    punjabList.append([(rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)])
-                    continue
-                if startPunjab==True:
-                    startPunjab=False #end=false
-                    punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)) #adding a tuple to the last 
-                    continue
-        punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder))
-    return (punjabList)
+    #     if rightHandToShoulder>maxDistRightHandToShoulder or leftHandToShoulder>maxDistLeftHandToShoulder: #might be buggy maybe switch to and?
+    #         rightHandToShoulderNext=distance(rightHandList[i+1],rightShoulderList[i+1])
+    #         leftHandToShoulderNext=distance(leftHandList[i+1],leftShoulderList[i+1])
+    #         maxDistRightHandToShoulder=rightHandToShoulder
+    #         if rightHandToShoulderNext<maxDistRightHandToShoulder or leftHandToShoulderNext<maxDistLeftHandToShoulder: #might be buggy
+    #             maxDistRightHandToShoulder=-100
+    #             if startPunjab==None or startPunjab==False:
+    #                 startPunjab=True
+    #                 punjabList.append([(rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)])
+    #                 continue
+    #             if startPunjab==True:
+    #                 startPunjab=False #end=false
+    #                 punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder)) #adding a tuple to the last 
+    #                 continue
+    #     punjabList[-1].append((rightHand, leftHand, rightElbow, leftElbow, rightShoulder, leftShoulder))
+    # return (punjabList)
     
     # gradePunjab(punjabList)
 
