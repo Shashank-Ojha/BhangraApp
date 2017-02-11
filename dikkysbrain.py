@@ -296,21 +296,21 @@ def leftArmFeedback(leftAngle):
         feedback=feedbackF[random.randint(0,1)]
     else: 
         feedback="Good job keeping your left arm at 45 degrees during punjab!"
-
+    return feedback
 def rightArmFeedback(rightAngle):
     if rightAngle<4:
         feedbackF=["Keep your right arm at 45 degrees when at maximum extension!", "Try to fully complete the motion with your right arm!"]
         feedback=feedbackF[random.randint(0,1)]
     else: 
         feedback="Great job keeping your right arm at 45 degrees during punjab!"
-
+    return feedback
 def heightDiffFeedback(heightDiffScore):
     if heightDiffScore<4:
         feedbackF=["Your right and left arms extend to different heights during punjab. Try to keep them more even!", "Push out your right and left arms to the same distance during punjab!"]
         feedback=feedbackF[random.randint(0,1)]
     else:
         feedback="Great job coordinating both your punjab arms! Keep up the good form!"
-
+    return feedback
 
 def sameHeightFeedback(sameY):
     if sameY<4:
@@ -318,6 +318,7 @@ def sameHeightFeedback(sameY):
         feedback=feedbackF[random.randint(0,1)]
     else:
         feedback="Good punjab arm form! Nice work gabbroo!"
+    return feedback
 def punjabFeedback(angleScore,leftAngle,rightAngle,heightDiffScore,sameY, finalPunjabScore):
     angle=angleFeedback(angleScore)
     leftArm=leftArmFeedback(leftAngle)
@@ -362,8 +363,8 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         rightElbowP4 = (bigtuple[2][0], bigtuple[2][1], bigtuple[4][2], bigtuple[2][3])
         #(v1,v2) = getVectors(rightShoulderHeightP1, bigtuple[4], bigtuple[4], rightElbowP4)
         (v1,v2) = getVectors(bigtuple[4], rightShoulderHeightP1, bigtuple[4], rightElbowP4)
-        print (v1)
-        print (v2)
+        # print (v1)
+        # print (v2)
         rightAngle = newAngle(v1,v2) # in radians
         #left elbow hangle
         leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
@@ -542,6 +543,8 @@ def main():
     punjabList=punjab(hashtable)
     final=gradePunjab(punjabList)
     return final
+
+
 
 # print(yello)  
 # print ("length of punjab=", len(yello))      
