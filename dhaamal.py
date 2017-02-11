@@ -252,6 +252,44 @@ def dhammalKneeAngle(dhammalList):
     percentageRight=(countDhammals-penalties)/countDhammals
     return percentageRight
 
+
+#def gradeDhammal(dhammalList):
+    #first grade if knee is over hip
+    #f : 0 to negative
+    #d: 0 to 5
+    #c: 5-10
+    #b: 10-15
+    #a: 15-30
+    dhammalKneeAngle(dhammalList)
+    # percentageDhammalArms=dhammalArms(dhammalList) #reutnrs a percentage like .95
+    
+    #grade 90 
+    
+    
+def giveArmFeedback(score):
+    if score<0.75:
+        feedbackF = ["Try to keep your arms more in line with each other.",
+                    "Get your arms to have equal extension!"]
+        feedback_num = random.randint(0, len(feedbackB)-1)
+        feedback = feedbackF[feedback_num]
+    elif score<0.92:
+        feedbackA = ["Getting close, flail with your arms a little less!", 
+                    "Avoid bouncing with your arms, keep them in line."]
+        feedback_num = random.randint(0, len(feedbackA)-1)
+        feedback = feedbackA[feedback_num]
+    else:
+        feedbackG = ['Great job with your arms, keep it popin!', 
+        'Nice arms gabbro!']
+        feedback_num = random.randint(0, len(feedbackG)-1)
+        feedback = feedbackG[feedback_num]
+    return feedback
+
+purpl=dhammal(hashtable)
+print(purpl)
+print("length of dhammal=", len(purpl))
+print(gradeDhammal(purpl))
+
+
 def kneeAboveHip(dhammalList):
     maxPos = []
     score = 0
