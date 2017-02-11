@@ -1,6 +1,9 @@
 import math
 from pickle import load
+
 hashtable=load(open("RiyaPickleDump.pkl","rb"))
+
+
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
     (x2, y2, z2, t2) = p2

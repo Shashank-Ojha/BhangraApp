@@ -1,6 +1,6 @@
 import math
 from pickle import load
-hashtable=load(open("RiyaDD.pkl","rb"))
+hashtable=load(open("RiyaDD2.pkl","rb"))
 
 def distance(p1, p2):
     (x1, y1, z1, t1) = p1
@@ -78,7 +78,7 @@ def getDhammals(leftKneeDistances,rightKneeDistances,hashtable):
         # else:
         #     rightKneeDistances[i-1]=-1 #down
     leftKneeDistances.pop() #base everything off of left knee
-    # rightKneeDistances.pop()
+    print("leftKneeDistances=", leftKneeDistances)
     SERIESLEN=6 #longer than punjab because double dhammal
     dhammalList=[]  #this is wack  [ [((),(),()),((),(),())], [((),(),()),((),(),())] ]
                            #        ^^^                       
@@ -130,12 +130,15 @@ def getDhammals(leftKneeDistances,rightKneeDistances,hashtable):
                     continue
                 if leftKneeDistances[j:j+SERIESLEN]==[-1]* SERIESLEN:
                     seenNegOnes=True
+
                 dhammalList[-1].append((rightHandList[j], leftHandList[j], rightElbowList[j], leftElbowList[j], rightShoulderList[j], leftShoulderList[j], neckList[j], chestList[j], bundList[j],
                 leftHipList[j], leftKneeList[j], leftFootList[j], rightHipList[j],rightKneeList[j], rightFootList[j]))
                 j+=1
             dhammalList.pop()
             break
     return dhammalList
+
+
 def dhammal(hashtable): #want to separate dhammals
     rightHandList=hashtable[21]
     leftHandList=hashtable[11]
@@ -177,6 +180,20 @@ def dhammal(hashtable): #want to separate dhammals
         rightKneeDistances.append(rightKneeToFloor)
     dhammalList=getDhammals(leftKneeDistances,rightKneeDistances,hashtable)
     return dhammalList
+
+
+
+
+def gradeDhammal(dhammalList):
+    #first grade if knee is over hip
+    #f : 0 to negative
+    #d: 0 to 5
+    #c: 5-10
+    #b: 10-15
+    #a: 15-30
+
+
+    #grade arms same height
 purpl=dhammal(hashtable)
 print(purpl)
 print("length of dhammal=", len(purpl))
