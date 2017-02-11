@@ -27,11 +27,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <script type="text/javascript">
-  function changePage() {
-    window.location = "faslaanFeedback.html"
-  }
-  </script>
   <body>
 
     <!-- Navigation -->
@@ -54,9 +49,7 @@
       </div>
     </nav>
     <div class="text-center">
-      <h1 style="color:cadetblue">FASLAAN<h1>
-
-      <h3>Song Suggestions</h3>
+      <h1 style="color:cadetblue">FUNDAMENETAL MOVES<h1>
     </div>
     <section class="no-padding" id="portfolio">
         <div class="container-fluid">
@@ -65,18 +58,21 @@
                   <div class="text-center">
                     <h1>Dhamaal<h1>
                     <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/w9Gbl6r8ZkE?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
+                    <a href="dhamaal.html"><img src="img/kinect.ico"></a>
                   </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                   <div class="text-center">
                     <h1>Punjab<h1>
                     <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/3vEZE9JRNxs?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
+                    <a href="punjab.html"><img src="img/kinect.ico"></a>
                   </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                   <div class="text-center">
                     <h1>Faslaan<h1>
                     <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/I-fHVf7Ix6A?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
+                    <a href="faslaan.html"><img src="img/kinect.ico"></a>
                   </div>
                 </div>
             </div>
@@ -87,11 +83,74 @@
     <!-- Content -->
     <div class="container-fluid performances">
       <div class="text-center">
-        <h2>Click Below When Done Recording<h2>
-        <button onclick="changePage()" type="button" class="btn btn-primary btn-lg">Submit</button>
+        <h1 style="color:cadetblue">SETS FROM CMU<h1>
       </div>
 
       <div class="row">
+
+        <div class="col-md-8">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/mMiiWLM7bZ4?autoplay=1"></iframe>
+          </div>
+        </div>
+
+        <div class="col-md-4 scrollable">
+          <section id="cd-timeline" class="cd-container">
+        		<div class="cd-timeline-block">
+        			<div class="cd-timeline-img cd-picture">
+        				<img src="img/cd-icon-picture.svg" alt="Picture">
+        			</div> <!-- cd-timeline-img -->
+
+        			<div class="cd-timeline-content">
+        				<h2>Bhangra Blowout</h2>
+        				<p>First Place Performance. Best mix.</p>
+        				<a class="cd-read-more" onclick="changeSource('https://www.youtube.com/embed/mMiiWLM7bZ4?autoplay=1')">Watch</a>
+        				<span class="cd-date">April 2016</span>
+        			</div> <!-- cd-timeline-content -->
+        		</div> <!-- cd-timeline-block -->
+
+        		<div class="cd-timeline-block">
+        			<div class="cd-timeline-img cd-movie">
+        				<img src="img/cd-icon-movie.svg" alt="Movie">
+        			</div> <!-- cd-timeline-img -->
+
+        			<div class="cd-timeline-content">
+                <h2>Bhangra Blowout</h2>
+        				<p>Third Place Performance at Washington DC.</p>
+        				<a class="cd-read-more" onclick="changeSource('https://www.youtube.com/embed/IfdiFUj7_QQ?autoplay=1')">Watch</a>
+        				<span class="cd-date">May 2015</span>
+        			</div> <!-- cd-timeline-content -->
+        		</div> <!-- cd-timeline-block -->
+
+            <div class="cd-timeline-block">
+        			<div class="cd-timeline-img cd-movie">
+        				<img src="img/cd-icon-movie.svg" alt="Movie">
+        			</div> <!-- cd-timeline-img -->
+
+        			<div class="cd-timeline-content">
+        				<h2>Bhangra in the Burgh</h2>
+        				<p>Performing in our hometown of Pittsburgh Pennsylvania</p>
+        				<a class="cd-read-more" onclick="changeSource('https://www.youtube.com/embed/qiReu8W0Se4?autoplay=1')">Watch</a>
+        				<span class="cd-date">Nov 2014</span>
+        			</div> <!-- cd-timeline-content -->
+        		</div> <!-- cd-timeline-block -->
+
+            <div class="cd-timeline-block">
+              <div class="cd-timeline-img cd-movie">
+                <img src="img/cd-icon-movie.svg" alt="Movie">
+              </div> <!-- cd-timeline-img -->
+
+              <div class="cd-timeline-content">
+                <h2>Worlds Best Bhangra Crew</h2>
+                <p>Matchup against Cornell Bhangra in New Jersey</p>
+                <a class="cd-read-more" onclick="changeSource('https://www.youtube.com/embed/7phwMexNrfE?autoplay=1')">Watch</a>
+                <span class="cd-date">April 2014</span>
+              </div> <!-- cd-timeline-content -->
+            </div> <!-- cd-timeline-block -->
+
+        	</section> <!-- cd-timeline -->
+
+        </div>
 
       </div>
     </div>

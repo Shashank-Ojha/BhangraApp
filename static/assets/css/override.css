@@ -1,0 +1,56 @@
+body {
+	font-family: 'Exo 2', sans-serif;
+}
+
+
+.icons img {
+	width: 50px;
+	height: 50px;
+}
+
+.alumni img {
+	width: 150px;
+	height: 240px;
+}
+
+.year {
+	padding:20px;
+}
+
+.performances {
+	padding: 40px;
+	margin-top: -40px;
+}
+
+.bg {
+	margin-top: -50px;
+	/* This image will be displayed fullscreen */
+	background:url('eliteclipped.jpg') no-repeat center center;
+	height: 750px;
+	/* Ensure the html element always takes up the full height of the browser window */
+	min-height:100%;
+
+	/* The Magic */
+	background-size:cover;
+	-moz-background-size: cover;
+  	-o-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+.header {
+	color:white;
+	margin-top:50px
+}
+
+#footer-sec {
+    background-color:#000;
+    color: white;
+    padding-top: 25px;
+    font-weight: 18px;
+    line-height: 25px;
+}
+
+#footer-sec h4 {
+    text-transform:uppercase;
+    color:#fff;
+}

@@ -27,11 +27,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <script type="text/javascript">
-  function changePage() {
-    window.location = "faslaanFeedback.html"
-  }
-  </script>
   <body>
 
     <!-- Navigation -->
@@ -49,55 +44,73 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
+              <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="team.html" role="button" aria-expanded="false">TEAM
+                <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="team.html">CURRENT</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="alumni.html">ALUMNI</a></li>
+                  </ul>
+              </li>
+              <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">MEDIA
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="performances.html">PERFORMANCES</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="mixes.html">MIXES</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="gigs.html">SERVICES</a></li>
+              </li>
             </ul>
           </div>
       </div>
     </nav>
-    <div class="text-center">
-      <h1 style="color:cadetblue">FASLAAN<h1>
 
-      <h3>Song Suggestions</h3>
-    </div>
-    <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter">
-                <div class="col-lg-4 col-sm-6">
-                  <div class="text-center">
-                    <h1>Dhamaal<h1>
-                    <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/w9Gbl6r8ZkE?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                  <div class="text-center">
-                    <h1>Punjab<h1>
-                    <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/3vEZE9JRNxs?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                  <div class="text-center">
-                    <h1>Faslaan<h1>
-                    <iframe id="video" class="embed-responsive-item" src="https://www.youtube.com/embed/I-fHVf7Ix6A?list=PLJWbEzNf2ZUSYm6-z6L3IEZzojvYbTqW0"></iframe>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <br>
     <!-- Content -->
-    <div class="container-fluid performances">
+    <div class="container performances">
       <div class="text-center">
-        <h2>Click Below When Done Recording<h2>
-        <button onclick="changePage()" type="button" class="btn btn-primary btn-lg">Submit</button>
+  
       </div>
 
       <div class="row">
+     
+        <div class="col-md-6">
+        <h1 class="text-center" style="padding-bottom:20px;">Dholi</h1>
+        
 
+          <div class="col-md-6">
+            <img src="assets/img/teampics/tejasdhol.jpg" class="img-responsive center-block">
+          </div>
+
+           <div class="col-md-6">
+            <p style="font-size:16px;">Book a talented Dholi for your next event! The dhol is a percussion instrument originating from Northern India. It was originally played to celebrate the beginning of the harvest in India. Now, it is played to celeberate joyous occasions and provides energy to any event!</p>
+          </div>
+
+        </div>
+
+
+         <div class="col-md-6">
+        <h1 class="text-center" style="padding-bottom:20px;">Performance</h1>
+        
+
+          <div class="col-md-6">
+            <img src="assets/img/teampics/shubhitdhamaal.jpg" class="img-responsive center-block">
+          </div>
+
+           <div class="col-md-6">
+            <p style="font-size:16px;">Bring CMU Bhangra to your next event! We can provide an energetic and vibrant performance for your next event. Our team is available to perform at any event whether it be a private party, cultural show, or an Indian wedding including the Baraat. We also provide a talented dhol player alongside our performance. Check out a previous <a href="https://www.youtube.com/watch?v=9tUjE_rkxBA&feature=youtu.be">performance!</a></p>
+          </div>
+
+        </div>
+      
       </div>
     </div>
 
+
     <!-- Footer -->
-    <!-- <section id="footer-sec" >
+    <section id="footer-sec" >
 
             <div class="container">
            <div class="row  pad-bottom" >
@@ -144,7 +157,7 @@
                 </div>
                </div>
             </div>
-    </section> -->
+    </section>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -152,7 +165,7 @@
     <script src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     function changeSource(link) {
-      document.querySelector("#video").src = link;
+      document.querySelector("#music").src = link;
     }
     </script>
   </body>
