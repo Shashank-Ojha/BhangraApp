@@ -377,7 +377,6 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
 
     sum1 = 0
     for k in range(0, len(yLeftList)):
-        print(abs(yLeftList[k] - yRightList[k]) * 100)
         sum1 += abs(yLeftList[k] - yRightList[k])
 
     heightDiffAvg = (sum1 / len(yLeftList))*100 #in cm
@@ -397,20 +396,33 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         regScore += 0
 
     ##### CHECK IF HANDS GO UP TO ROUGHLY SAME Y EACH TIME GRADE #####
-    leftDiff = abs(max(yLeftList) - min(yLeftList))
-    rightDiff = abs(max(yRightList) - min(yRightList))
+    # remove abnormalities (if difference is greater thatn 40 cm just ignore the value)
+    # for k in range(0, len(yLeftList)):
+       
+    #     if ((len(yLeftList) - k) < 0):
 
-    print(min(yLeftList), rightDiff)
-# grade: are your hands going to the same areas?
-    if (leftDiff <= 10 and rightDiff <= 10): 
+    #     if (abs(max(yLeftList) - yLeftList[len(yLeftList) - k]) >= 0.4):
+    #         yLeftList.remove(yLeftList[k])
+
+    while (abs(max(yLeftList) - min(yLeftList)) > 0.4):
+        yLeftList.remove(min(yLeftList))
+    while (abs(max(yRightList) - min(yRightList)) > 0.4):
+        yRightList.remove(min(yRightList))
+    
+    leftDiff = (abs(max(yLeftList) - min(yLeftList)))*100
+    rightDiff = (abs(max(yRightList) - min(yRightList)))*100
+
+    print(leftDiff, rightDiff)
+# grade: are your hands going to the same areas? (#5)
+    if (leftDiff <= 15 and rightDiff <= 15): 
         regScore += 5
-    elif (leftDiff <= 15 and rightDiff <= 15): 
-        regScore += 4
     elif (leftDiff <= 20 and rightDiff <= 20): 
-        regScore += 3
+        regScore += 4
     elif (leftDiff <= 25 and rightDiff <= 25): 
-        regScore += 2
+        regScore += 3
     elif (leftDiff <= 30 and rightDiff <= 30): 
+        regScore += 2
+    elif (leftDiff <= 35 and rightDiff <= 35): 
         regScore += 1
     else:
         regScore += 0
@@ -418,6 +430,7 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
     print (regScore/5)
 
     ##### HANDS SHOULD BE OUTSIDE ELBOW GRADE #####
+
 
 
 
