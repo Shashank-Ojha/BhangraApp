@@ -241,7 +241,7 @@ def newAngle(v1,v2):
 
 def gradePunjab(punjabList): # Master Grading Function for Punjab, will return score
     #arms
-    # for punjab in punjabList: #each punjab - involved 
+    for punjab in punjabList: #each punjab - involved 
     #    for moment in punjab:
             #0-rightHand
             #1-leftHand
@@ -263,7 +263,7 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
     regScore = 0
     # @max length, the angle between shoulder and hand should be (Fairly) consistent
     # we assume the first large tuple of each small list is the max length
-    maxPosList = list()
+     maxPosList = []
     for punjab in punjabList:
         maxPosList.append(punjab[0])
     # for each maxlength, calculate the angle between shoulder height and elbow
@@ -274,16 +274,30 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         rightElbowP4 = (bigtuple[2][0], bigtuple[2][1], bigtuple[4][2], bigtuple[2][3])
         #(v1,v2) = getVectors(rightShoulderHeightP1, bigtuple[4], bigtuple[4], rightElbowP4)
         (v1,v2) = getVectors(bigtuple[4], rightShoulderHeightP1, bigtuple[4], rightElbowP4)
+        print (v1)
+        print (v2)
         rightAngle = newAngle(v1,v2) # in radians
         #left elbow hangle
+<<<<<<< Updated upstream
         leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
         leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
         # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
         (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
         leftAngle = angle(v1,v2) # in radians
+=======
+        # leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
+        # leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
+        # # (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
+        # (v1,v2) = getVectors(bigtuple[5], leftShoulderHeightP1, bigtuple[5], leftElbowP4)
+        # leftAngle = angle(v1,v2) # in radians
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
         #(v1,v2) = getVectors(bigtuple[4], bigtuple[2], bigtuple[2], bigtuple[0])
         #rightAngle = newAngle(v1,v2)
+=======
+    print("maxPosList = ", maxPosList)
+>>>>>>> Stashed changes
         #print(180-math.degrees(rightAngle))
         #print(180-math.degrees(leftAngle))
         # print(rightShoulderHeightP1)
@@ -291,6 +305,7 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
         # print(bigtuple[4])
         # print(rightElbowP4)
         # print(v1,v2)
+<<<<<<< Updated upstream
         #print(math.degrees(rightAngle), math.degrees(leftAngle))
         calcPosList.append((math.degrees(leftAngle), math.degrees(rightAngle))) # (left angle, right angle)
 
@@ -410,6 +425,13 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
 
     ##### KNEE GOES UP AT SAME TIME AS HAND GRADE #####
 
+=======
+<<<<<<< Updated upstream
+        print(math.degrees(rightAngle))
+=======
+        # print(math.degrees(rightAngle))
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
 

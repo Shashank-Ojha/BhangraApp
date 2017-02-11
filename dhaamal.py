@@ -62,7 +62,7 @@ def angle(v1, v2):
 def delta(x1, x2):
     return (x2-x1)
 
-def almostEqual(x, y, epsilon = 10**-2):
+def almostEqual(x, y, epsilon = 10**-1):
     return abs(x-y) < epsilon
 
 def newDot(v1,v2):
@@ -253,7 +253,7 @@ def dhammalKneeAngle(dhammalList):
     return percentageRight
 
 
-def gradeDhammal(dhammalList):
+#def gradeDhammal(dhammalList):
     #first grade if knee is over hip
     #f : 0 to negative
     #d: 0 to 5
@@ -270,6 +270,28 @@ purpl=dhammal(hashtable)
 print(purpl)
 print("length of dhammal=", len(purpl))
 print(gradeDhammal(purpl))
+
+
+def kneeAboveHip(dhammalList):
+    maxPos = []
+    score = 0
+    for dhammal in dhammalList:
+        x = round(len(dhammal)/3)
+        maxPos.append(dhammal[x])
+    print(maxPos)
+    for i in maxPos:
+        hipCoordsL = i[9]
+        kneeCoordsL = i[10]
+        hip_y = hipCoordsL[1]
+        knee_y = kneeCoordsL[1]
+        if knee_y>hip_y:
+            score+=1
+        elif almostEqual(knee_y, hip_y):
+            score +=0.5
+        else:
+            continue
+    return score/len(maxPos)
+    
 
 
 
