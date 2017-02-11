@@ -20,8 +20,8 @@ def derivative(v1, v2, t):
 	return ((x2-x1)/t, (y2-y1)/t, (z2-z1)/t)
 
 def dot(v1, v2): #p2>p1 and p4>p3
-	(x1, y1, z1, t1) = v1
-	(x2, y2, z2, t2) = v2
+	(x1, y1, z1) = v1
+	(x2, y2, z2) = v2
 	return (x1*x2 + y1*y2 + z1*z2)
 
 def getVectors(p1, p2, p3, p4): #p2>p1 and p4>p3
@@ -55,26 +55,7 @@ def angle(v1, v2):
 	dotp = dot(v1, v2)
 	m1 = magnitude(v1)
 	m2 = magnitude(v2)
-	return acos(dotp/(m1*m2)) #radian
-
-
-def gradePunjab(punjabList):
-    #arms
-    for punjab in punjabList: #each punjab
-        for moment in punjab:
-            #0-rightHand
-            #1-leftHand
-            #2-rightElbow
-            #3-leftElbow
-            #4-rightShoulder
-            #5-leftShoulder
-            #(x,y,z,t)
-            rightElbowAngle=angle(getVectors(rightShoulder, rightElbow, rightElbow, rightHand)) #check this ordering later when im not tired af
-            leftElbowAngle=angle(getVectors(leftShoulder, leftElbow, leftElbow, leftHand)) #check ordering
-            rightElbowAngleDiff=math.abs(rightElbowAngle*(360/(2*math.pi))-170)
-            lefttElbowAngleDiff=math.abs(leftElbowAngle*(360/(2*math.pi))-170)
-            #margin of error for elbow angles:
-                #A - 
+	return math.acos(dotp/(m1*m2)) #radian
 
 
 
@@ -202,6 +183,65 @@ print ("length of punjab=", len(yello))
     (0.006687115412205458, 0.11197377741336823, 2.9358596801757812, 6225), 
     (0.35103851556777954, 0.3210884928703308, 2.8813986778259277, 6225), 
     (0.05853675305843353, 0.31353265047073364, 2.9315340518951416, 6225))]
+
+
+def gradePunjab(punjabList): # Master Grading Function for Punjab, will return score
+    #arms
+    # for punjab in punjabList: #each punjab - involved 
+    #    for moment in punjab:
+            #0-rightHand
+            #1-leftHand
+            #2-rightElbow
+            #3-leftElbow
+            #4-rightShoulder
+            #5-leftShoulder
+            #(x,y,z,t)
+
+            # rightElbowAngle=angle(getVectors(rightShoulder, rightElbow, rightElbow, rightHand)) #check this ordering later when im not tired af
+            # leftElbowAngle=angle(getVectors(leftShoulder, leftElbow, leftElbow, leftHand)) #check ordering
+            # rightElbowAngleDiff=math.abs(rightElbowAngle*(360/(2*math.pi))-170)
+            # lefttElbowAngleDiff=math.abs(leftElbowAngle*(360/(2*math.pi))-170)
+
+            #margin of error for elbow angles:
+                #A - 
+
+    ##### REGULARITY GRADE #####
+    # @max length, the angle between shoulder and hand should be (Fairly) consistent
+    # we assume the first large tuple of each small list is the max length
+    maxPosList = list()
+    for punjab in punjabList:
+        maxPosList.append(punjab[0])
+    # for each maxlength, calculate the angle between shoulder height and elbow
+    for bigtuple in maxPosList: 
+        #right elbow angle 
+        rightShoulderHeightP1 = (bigtuple[2][0], bigtuple[4][1], bigtuple[4][2], bigtuple[4][3]) #takes everything  of right shoulder except x value, which is from right elbow
+        rightElbowP4 = (bigtuple[2][0], bigtuple[2][1], bigtuple[4][2], bigtuple[2][3])
+        (v1,v2) = getVectors(rightShoulderHeightP1, bigtuple[4], bigtuple[4], rightElbowP4)
+        rightAngle = angle(v1,v2) # in radians
+        #left elbow hangle
+        leftShoulderHeightP1 = (bigtuple[3][0], bigtuple[5][1], bigtuple[5][2], bigtuple[5][3]) #takes everything  of right shoulder except x value, which is from right elbow
+        leftElbowP4 = (bigtuple[3][0], bigtuple[3][1], bigtuple[5][2], bigtuple[3][3])
+        (v1,v2) = getVectors(leftShoulderHeightP1, bigtuple[5], bigtuple[5], leftElbowP4)
+        leftAngle = angle(v1,v2) # in radians
+
+        print(180-math.degrees(rightAngle))
+        #print(math.degrees(leftAngle))
+
+
+print("start of test")
+print(gradePunjab(yello))
+print("it worked")
+
+
+    # rightHandList=hashtable[21]
+    # leftHandList=hashtable[11]
+    # rightElbowList=hashtable[22]
+    # leftElbowList=hashtable[12]
+    # rightShoulderList=hashtable[23]
+    # leftShoulderList=hashtable[13]
+
+
+
 
 
 
