@@ -40,6 +40,14 @@ def normalize(v):
 	m = magnitude(v)
 	return (x1/m, y1/m, z1/m)
 
+def angle(v1, v2):
+	dotp = dot(v1, v2)
+	m1 = magnitude(v1)
+	m2 = magnitude(v2)
+	return acos(dotp/(m1*m2)) #radian
+
+
+
 
 def punjab(hashtable):
     #pretend we have init already written
