@@ -202,10 +202,6 @@ def punjab(hashtable):
     
     # gradePunjab(punjabList)
 
-
-
-
-
               
 
         # could possibly be used for scoring
@@ -543,7 +539,8 @@ def gradePunjab(punjabList): # Master Grading Function for Punjab, will return s
     return everything
 
 def main():
-    final=punjab(hashtable)
+    punjabList=punjab(hashtable)
+    final=gradePunjab(punjabList)
     return final
 
 # print(yello)  
