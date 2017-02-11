@@ -65,6 +65,22 @@ def delta(x1, x2):
 def almostEqual(x, y, epsilon = 10**-2):
     return abs(x-y) < epsilon
 
+def newDot(v1,v2):
+    # (x1,y1) = (v1[0],v1[1])
+    # (x2,y2) = (v1[0],v1[1])
+    # length1 = (x1**2 + y1**2)**0.5
+    # length2 = (x2**2 + y2**2)**0.5
+    v1n = (v1[0], v1[1], 0)
+    v2n = (v2[0], v2[1], 0)
+    return (v1n[0]*v2n[0] + v1n[1]*v2n[1])
+
+def newAngle(v1,v2):
+    v1n = (v1[0], v1[1], 0)
+    v2n = (v2[0], v2[1], 0)
+    newDotp = newDot(v1n, v2n)
+    m1 = magnitude(v1n)
+    m2 = magnitude(v2n)
+    return math.acos(newDotp/(m1*m2)) #rad
 
 def getDhammals(leftKneeDistances,rightKneeDistances,hashtable):
     #one DOUBLE dhammal is left knee up down then right before up again
@@ -124,8 +140,8 @@ def getDhammals(leftKneeDistances,rightKneeDistances,hashtable):
             while (j<len(leftKneeDistances)-SERIESLEN): 
                 if seenNegOnes and leftKneeDistances[j+1:j+1+SERIESLEN]==[1]*SERIESLEN:
                     #we are done
-                    dhammalList.append([(rightHandList[j], leftHandList[j], rightElbowList[j], leftElbowList[j], rightShoulderList[j], leftShoulderList[j], neckList[j], chestList[j], bundList[j],
-                leftHipList[j], leftKneeList[j], leftFootList[j], rightHipList[j],rightKneeList[j], rightFootList[j])])
+                    dhammalList.append([(rightHandList[j+1], leftHandList[j+1], rightElbowList[j+1], leftElbowList[j+1], rightShoulderList[j+1], leftShoulderList[j+1], neckList[j+1], chestList[j+1], bundList[j+1],
+                leftHipList[j+1], leftKneeList[j+1], leftFootList[j+1], rightHipList[j+1],rightKneeList[j+1], rightFootList[j+1])])
                     seenNegOnes=False
                     continue
                 if leftKneeDistances[j:j+SERIESLEN]==[-1]* SERIESLEN:
@@ -182,6 +198,59 @@ def dhammal(hashtable): #want to separate dhammals
     return dhammalList
 
 
+def dhammalArms(dhammalList):
+    def almostEqual(x, y, marginError):
+        return abs(x-y) < marginError
+
+    penalties=0
+    countMoments=0
+    MARGINERROR=10**-1
+    #grade arms same height
+    for oneDhammal in dhammalList:
+        for moment in oneDhammal:
+            rightHand=moment[0]
+            leftHand=moment[1]
+            (xr, yr, zr, tr)=rightHand
+            (xl, yl, zl, tl)=leftHand
+            print("yr=", yr)
+            print("yl=", yl)
+            print("yr-yl=", yr-yl)
+            if not almostEqual(yr, yl,MARGINERROR):
+                #penalize
+                penalties+=1
+            countMoments+=1
+    percentageRight=(countMoments-penalties)/countMoments
+    return percentageRight
+
+def dhammalKneeAngle(dhammalList):
+    MARGINERROR=10 #degrees
+    def almostEqual(x, y, marginError):
+        return abs(x-y) < marginError
+    #need vector from hip knee
+    #need vector from knee to foot
+    #calculate angle between those vecotrs
+    STDEV=6
+    penalties=0
+    countDhammals=0
+    for oneDhammal in dhammalList:
+        #only take first few positions
+        #high point happens at 1/3 of oneDhammal
+        for i in range(round(.33*len(oneDhammal)), round(.33*len(oneDhammal))+STDEV):
+            moment=oneDhammal[i]
+            leftHip=moment[9]
+            leftKnee=moment[10]
+            leftFoot=moment[11]
+            (v1, v2)=(getVectors(leftHip, leftKnee, leftKnee, leftFoot))
+            (x1, y1, z1)=v1
+            (x2, y2, z1)=v2
+            v1=(x1, y1)
+            v2=(x2, y2)
+            leftKneeAngle=newAngle(v1, v2) * (360/(2*math.pi))
+            if not (almostEqual(leftKneeAngle,90, MARGINERROR)):
+                penalties+=1
+            countDhammals+=1
+    percentageRight=(countDhammals-penalties)/countDhammal
+    return percentageRight
 
 
 def gradeDhammal(dhammalList):
@@ -191,12 +260,16 @@ def gradeDhammal(dhammalList):
     #c: 5-10
     #b: 10-15
     #a: 15-30
+    dhammalKneeAngle(dhammalList)
+    # percentageDhammalArms=dhammalArms(dhammalList) #reutnrs a percentage like .95
+    
+    #grade 90 
 
 
-    #grade arms same height
 purpl=dhammal(hashtable)
 print(purpl)
 print("length of dhammal=", len(purpl))
+print(gradeDhammal(purpl))
 
 
 
